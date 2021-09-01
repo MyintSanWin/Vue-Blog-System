@@ -1,34 +1,30 @@
 <template>
-<div class="post">
-     <router-link :to="{name:'Detail',params:{id:post.id}}">
-    <h2>{{post.title}}</h2>
- </router-link>
-  <p>{{cutPostBody}}</p>
-  <div v-for="tag in post.tags" :key="tag" class="pill">
-      {{tag}}
-
-  </div>
-</div>
+   <div class="post">
+        
+            <h2>{{post.title}}</h2>
+       
+        <p>{{cutPostBody}}</p>
+        <div v-for="tag in post.tags" :key="tag" class="pill">
+       <router-link :to="{name:'Tag',params:{tag:tag}}">{{tag}}</router-link>
+        </div>
+   </div>
 </template>
 
 <script>
-import { computed } from '@vue/reactivity'
-
+import { computed } from 'vue'
 export default {
-props:["post"],
-setup(props){
-    let cutPostBody=computed(()=>{
-        return props.post.body.substring(0,12) + "...";
-
-    })
- 
-    return {cutPostBody}
-}
+    props:['post'],
+    setup(props){
+        let cutPostBody=computed(()=>{
+            return props.post.body.substring(0,100)+"....";
+        })
+        return {cutPostBody}
+    }
 }
 </script>
 
-<style scoped>
-.post {
+<style>
+    .post {
         margin: 0 40px 30px;
         padding-bottom: 30px;
         border-bottom: 1px dashed #e7e7e7;
@@ -62,5 +58,6 @@ setup(props){
         border-radius: 20px;
         font-size: 14px;
       }
-
 </style>
+
+    
