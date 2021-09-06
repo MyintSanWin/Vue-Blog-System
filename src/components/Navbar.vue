@@ -1,10 +1,10 @@
 <template>
   <header>
-        <h1>Bloggy Vue</h1>
-        <nav>
-            <router-link :to="{name:'Home'}">Home</router-link>
-            <router-link :to="{name:'Create'}">Create</router-link>
-        </nav>
+      <h1>Bloggy Vue</h1>
+      <nav>
+          <router-link :to="{name:'Home'}">Home</router-link>
+          <router-link :to="{name:'Create'}">Create</router-link>
+      </nav>
   </header>
 </template>
 
@@ -15,7 +15,7 @@ export default {
 </script>
 
 <style>
- header{
+  header{
     display: flex;
     justify-content: space-between;
     align-items: center;

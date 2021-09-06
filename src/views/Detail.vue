@@ -11,18 +11,21 @@
 </template>
 
 <script>
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/Spinner'
 import getPost from "../composables/getPost"
-import {useRoute} from 'vue-router'
+import {useRoute} from "vue-router"
 export default {
   components: { Spinner },
-props:['id'],
-setup(props){
-let route=useRoute();
-let {post,error,load}=getPost(route.params.id);
-load();
-return {post,error,load};
-}
+ 
+    props:["id"],//this.$route.parmas.id
+  setup(props){
+    let {post,error,load}=getPost(props.id);//{post,error,load}
+    let route=useRoute();// this.$route
+    // console.log(route.params.id);
+    // let {post,error,load}=getPost(route.params.id);//{post,error,load}
+    load();
+    return{post,error}
+  }
 }
 </script>
 

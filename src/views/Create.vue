@@ -1,58 +1,59 @@
 <template>
- <form @submit.prevent="addPost">
-     <label>Title</label>
-     <input type="text" required v-model="title"> 
-     <label>Body</label>
-    <textarea required v-model="body"> </textarea>
+
+  <form @submit.prevent="addPost">
+    <label>Title</label>
+    <input type="text" required v-model="title">
+
+    <label>Body</label>
+    <textarea required v-model="body"></textarea>
     <label>Tags(hit enter to add a tag)</label>
-    <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown"> 
-  <div v-for="tag in tags" :key="tag" class="pill">
-        {{tag}}
-  </div>
+    <input type="text" v-model="tag"  @keydown.enter.prevent="handleKeydown">
+    <div v-for="tag in tags" :key="tag" class="pill">
+      {{tag}}
+    </div>
     <button>add post</button>
- </form>
+  </form>
 </template>
 
 <script>
-import {useRouter} from "vue-router"
-import { ref } from '@vue/reactivity'
+import { ref } from 'vue'
+import {useRouter} from 'vue-router'
 export default {
-
-setup(){
-    let router=useRouter();
-
-    let title=ref("");
-    let  body=ref("");
-    let tag=ref("");
+  setup(){
+    let router=useRouter(); //this.$router
+   let title=ref("");//title
+    let body=ref("");//body
+    let tag=ref("");//html
     let tags=ref([]);
     let handleKeydown=()=>{
-       if(!tags.value.includes(tag.value)){
-           tags.value.push(tag.value);
-       }
-       tag.value=""
+      if(!tags.value.includes(tag.value)){
+        tags.value.push(tag.value)
+      }
+      tag.value=""
     }
     let addPost=async()=>{
-       await fetch(" http://localhost:3000/posts",{method:"POST",
-     headers:{
-       "Content-type":"application/json"
-     },
-     body:JSON.stringify(
-       {
-          title:title.value,
-          body:body.value,
-          tags:tag.value
-       }
-     )})
-    //  redirect user to home page
-    router.push("/");
-
+        await fetch("http://localhost:3000/posts",{
+          method:"POST",
+          headers:{
+            "Content-type":"application/json"
+          },
+          body:JSON.stringify(
+            {
+              title:title.value,//""
+              body:body.value,//""
+              tags:tags.value//[]
+            }
+          )
+        })
+              // redirect user to home page
+        router.push("/");
     }
-    return {title,body,handleKeydown,tag,tags,addPost}
-}
+    return {title,body,tag,handleKeydown,tags,addPost}
+  }
 }
 </script>
-
 <style>
+
   form {
     max-width: 480px;
     margin: 0 auto;
