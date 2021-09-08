@@ -20,6 +20,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 
 let db=firebase.firestore();
+let timestamp=firebase.firestore.FieldValue.serverTimestamp
 //dababase setup
-export {db}
+export {db,timestamp}
   
