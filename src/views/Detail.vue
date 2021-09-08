@@ -3,6 +3,7 @@
   <div v-if="post" class="post">
       <h2>{{post.title}} </h2>
       <p>{{post.body}}</p>
+      <button class="delete" @click="deletePost()">delete</button>
       </div>
   <div v-else>
     <spinner></spinner>
@@ -13,7 +14,9 @@
 <script>
 import Spinner from '../components/Spinner'
 import getPost from "../composables/getPost"
+import {db} from '../firebase/config'
 import {useRoute} from "vue-router"
+import {useRouter} from 'vue-router' //redirect package
 export default {
   components: { Spinner },
  
@@ -21,11 +24,22 @@ export default {
   setup(props){
     let {post,error,load}=getPost(props.id);//{post,error,load}
     let route=useRoute();// this.$route
+    let router=useRouter();//redirect to homepage
     // console.log(route.params.id);
     // let {post,error,load}=getPost(route.params.id);//{post,error,load}
     load();
-    return{post,error}
+    let deletePost=async()=>{
+      let id=props.id;
+     await db.collection('posts').doc(id).delete();
+
+      router.push('/');
+      
+    }
+    
+  
+    return{post,error,deletePost}
   }
+  
 }
 </script>
 
@@ -63,6 +77,9 @@ export default {
         padding: 8px;
         border-radius: 20px;
         font-size: 14px;
+      }
+      button.delete{
+        margin: 30px auto;
       }
 
 </style>
