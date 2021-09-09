@@ -1,5 +1,5 @@
 <template>
- <div class="tag-cloud">
+  <div class="tag-cloud">
     <h3>Tag Cloud</h3>
     <div v-for="tag in uniqueTags" :key="tag">
       <router-link :to="{name:'Tag',params:{tag}}">{{tag}}</router-link>
@@ -15,14 +15,10 @@ export default {
       let tags=ref([]);
       props.posts.forEach((post)=>{
         // console.log(post)
-        if(typeof(post)==="string"){
-          post =JSON.parse(post)
-        }
-        console.log(post.tags);
-        // post.tags.forEach((tag)=>{
-        //   // console.log(tag);
-        //   tags.value.push(tag);
-        // })
+        post.tags.forEach((tag)=>{
+          // console.log(tag);
+          tags.value.push(tag);
+        })
       })
       let uniqueTags=tags.value.filter((tag,index,array)=>{
         return array.indexOf(tag)===index
